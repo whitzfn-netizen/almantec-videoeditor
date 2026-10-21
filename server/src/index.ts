@@ -1,3 +1,5 @@
+import path from "node:path";
+import { pathToFileURL } from "node:url";
 import cookie from "@fastify/cookie";
 import multipart from "@fastify/multipart";
 import rateLimit from "@fastify/rate-limit";
@@ -50,7 +52,7 @@ export async function buildApp() {
   return app;
 }
 
-if (process.argv[1] && import.meta.url.endsWith(process.argv[1].split("/").pop()!)) {
+if (process.argv[1] && import.meta.url === pathToFileURL(path.resolve(process.argv[1])).href) {
   const app = await buildApp();
   await app.listen({ port: config.port, host: config.host });
   console.log(`AlmanTec Viral Studio en http://localhost:${config.port}${config.appPassword ? "" : "  (⚠ sin contraseña: define APP_PASSWORD)"}`);
