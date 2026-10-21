@@ -133,7 +133,7 @@ const filterPath = (p: string) => p.replace(/\\/g, "/").replace(/:/g, "\\:").rep
 export async function assembleFinal(a: FinalAssembly) {
   const work = path.dirname(a.out);
   const list = path.join(work, "concat.txt");
-  fs.writeFileSync(list, a.segments.map((f) => `file '${f.replace(/'/g, "'\\''")}'`).join("\n") + "\n");
+  fs.writeFileSync(list, a.segments.map((f) => `file '${f.replace(/\\/g, "/").replace(/'/g, "'\\''")}'`).join("\n") + "\n");
   const D = a.duration;
   const args = ["-f", "concat", "-safe", "0", "-i", list];
   let idx = 1;

@@ -131,7 +131,7 @@ export async function analyzeVisual(src: string, sha: string, info: MediaInfo): 
   // Una sola pasada a baja resolución y 5 fps: cambio de escena, brillo y desenfoque.
   await ffmpeg([
     "-i", src, "-an",
-    "-vf", `fps=5,scale=320:-2,select='gte(scene\\,0)',signalstats,blurdetect=block_width=32:block_height=32,metadata=mode=print:file=${metaFile.replace(/:/g, "\\:")}`,
+    "-vf", `fps=5,scale=320:-2,select='gte(scene\\,0)',signalstats,blurdetect=block_width=32:block_height=32,metadata=mode=print:file=${metaFile.replace(/\\/g, "/").replace(/:/g, "\\:")}`,
     "-f", "null", "-",
   ]);
   const frames: VisualFrame[] = [];
