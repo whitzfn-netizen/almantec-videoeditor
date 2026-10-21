@@ -1,0 +1,31 @@
+# Uso:
+#   cp .env.example .env   (rellena APP_PASSWORD y SESSION_SECRET)
+#   docker compose run --rm models   (descarga los modelos gratuitos una vez, ~1,5 GB)
+#   docker compose up -d
+services:
+  studio:
+    build: .
+    env_file: .env
+    environment:
+      DATA_DIR: /data
+      MODELS_DIR: /models
+      INLINE_WORKER: "1"
+    ports:
+      - "127.0.0.1:8080:8080"   # expón solo a través de un proxy HTTPS (Caddy, Nginx…)
+    volumes:
+      - studio-data:/data
+      - studio-models:/models
+    restart: unless-stopped
+
+  models:
+    build: .
+    profiles: ["setup"]
+    entrypoint: ["bash", "scripts/download-models.sh"]
+    environment:
+      MODELS_DIR: /models
+    volumes:
+      - studio-models:/models
+
+volumes:
+  studio-data:
+  studio-models:

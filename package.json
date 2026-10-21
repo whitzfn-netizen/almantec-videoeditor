@@ -1,0 +1,17 @@
+{
+  "name": "almantec-viral-studio",
+  "private": true,
+  "version": "0.1.0",
+  "description": "AlmanTec Viral Studio AI: edición automática de vídeos verticales",
+  "workspaces": ["server", "web"],
+  "scripts": {
+    "dev": "npm run dev -w server & npm run dev -w web",
+    "build": "npm run build -w web && npm run build -w server",
+    "start": "npm run start -w server",
+    "worker": "npm run worker -w server",
+    "test": "npm test -w server",
+    "models": "bash scripts/download-models.sh",
+    "test-clips": "node scripts/make-test-clips.mjs"
+  },
+  "engines": { "node": ">=22.13" }
+}

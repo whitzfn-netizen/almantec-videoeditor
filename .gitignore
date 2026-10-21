@@ -1,0 +1,8 @@
+node_modules/
+dist/
+data/
+/models
+.env
+*.log
+test-clips/
+test-results/
